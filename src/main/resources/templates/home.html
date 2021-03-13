@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Contact List</h1>
+
+
+
+<div>
+
+    <nobr>
+
+        <a th:href="@{/home/add-new-film}">Add Film</a> |
+
+    </nobr>
+
+</div>
+
+<br/><br/>
+
+<div>
+
+    <table border="1">
+
+        <tr>
+
+            <th>Id</th>
+
+            <th>Title</th>
+
+            <th>Description</th>
+
+
+        </tr>
+
+        <tr th:each ="film : ${films}">
+
+            <td th:utext="${film.id}">...</td>
+
+            <td th:utext="${film.title}">...</td>
+
+            <td th:utext="${film.description}">...</td>
+
+        </tr>
+
+    </table>
+
+</div>
+</body>
+</html>
