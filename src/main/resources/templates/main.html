@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <title th:utext="${msg.title}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1 th:utext="${title}" />
+<a th:href="@{/home}">Films List</a>
+<br/><br/>
+<div>Copyright © filmReview.com</div>
+</body>
+
+</html>

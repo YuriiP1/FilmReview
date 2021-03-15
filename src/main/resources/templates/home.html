@@ -5,49 +5,33 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Contact List</h1>
-
-
-
+<h1>Films</h1>
 <div>
-
     <nobr>
-
         <a th:href="@{/home/add-new-film}">Add Film</a> |
-
     </nobr>
-
 </div>
+<br/><br/>
 
+<div class="container my-2" align="center">
+        <div class="col-md-12" th:each="film : ${films}">
+            <h1 th:text="${film.title}" ></h1>
+            <p th:text="${film.description}"></p>
+            <div>
+                <div class="pull-right">
+                    <span class="label label-info" >personal</span>
+            </div>
+                <hr style="width:50%;text-align:center;color:green">
+            </div>
+    </div>
+</div>
 <br/><br/>
 
 <div>
-
-    <table border="1">
-
-        <tr>
-
-            <th>Id</th>
-
-            <th>Title</th>
-
-            <th>Description</th>
-
-
-        </tr>
-
-        <tr th:each ="film : ${films}">
-
-            <td th:utext="${film.id}">...</td>
-
-            <td th:utext="${film.title}">...</td>
-
-            <td th:utext="${film.description}">...</td>
-
-        </tr>
-
-    </table>
-
+    <nobr>
+        <span th:if="${hasPrev}"><a th:href="@{/home?page={prev}(prev=${prev})}">Prev</a>&nbsp;&nbsp;&nbsp;</span>
+        <span th:if="${hasNext}"><a th:href="@{/home?page={next}(next=${next})}">Next</a></span>
+    </nobr>
 </div>
 </body>
 </html>
