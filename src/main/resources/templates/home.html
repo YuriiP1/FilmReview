@@ -8,14 +8,15 @@
 <h1>Films</h1>
 <div>
     <nobr>
-        <a th:href="@{/home/add-new-film}">Add Film</a> |
+        <a th:href="@{/home/add-film}">Add Film</a> |
+        <a th:href="@{/}">Back to Main</a>
     </nobr>
 </div>
 <br/><br/>
 
 <div class="container my-2" align="center">
         <div class="col-md-12" th:each="film : ${films}">
-            <h1 th:text="${film.title}" ></h1>
+            <a th:href="@{/home/films/{filmId}(filmId=${film.id})}"> <h1 th:text="${film.title}" ></h1></a>
             <p th:text="${film.description}"></p>
             <div>
                 <div class="pull-right">

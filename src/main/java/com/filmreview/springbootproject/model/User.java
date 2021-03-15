@@ -14,7 +14,6 @@ public class User {
     @NotBlank(message = "Username may not be blank.")
     private String username;
 
-//    @NotNull(message = "Password may not be null.")
     @NotBlank(message = "Password may not be blank.")
     private String password;
 

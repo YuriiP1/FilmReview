@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${add} ? 'Create Film' : 'Edit Film'"/>
+</head>
+<body>
+<h1 th:text="${add} ? 'Create Film' : 'Edit Film'"/>
+<a th:href="@{/home}">Back to Home page</a>
+<form th:action="${add} ? @{/home/add-film} : @{/home/{filmId}/edit(filmId={film.id})}"
+      th:object="${film}" method="POST">
+
+    <table>
+        <tr th:if="${film.id}">
+            <td>ID</td>
+            <td>:</td>
+            <td th:utext="${film.id}">...</td>
+        </tr>
+        <tr>
+            <td>Title:</td>
+            <td><input type="text" th:field="*{title}" /></td>
+            <td th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</td>
+        </tr>
+        <tr>
+            <td>Description:</td>
+            <td><textarea rows="8" cols="90" th:field="*{description}" ></textarea></td>
+            <td th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</td>
+        </tr>
+        <tr>
+<!--            <td><button type="submit">Submit</button></td>-->
+        </tr>
+    </table>
+    <input type="submit" th:value="${add} ? 'Create' : 'Update'"/>
+</form>
+<div th:if="${errorMessage}" th:utext="${errorMessage}" class="error"/>
+</body>
+</html>

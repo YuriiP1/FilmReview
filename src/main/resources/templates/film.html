@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>View Film</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<h1>View Contact</h1>
+<a th:href="@{/home}">Back to Home Page</a>
+<br/><br/>
+< th:if="${film}">
+    <table border="0">
+        <tr>
+            <td>ID</td>
+            <td>:</td>
+            <td th:utext="${film.id}">...</td>
+        </tr>
+        <tr>
+            <td>Title</td>
+            <td>:</td>
+            <td th:utext="${film.title}">...</td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td>:</td>
+            <td th:utext="${film.description}">...</td>
+        </tr>
+
+    </table>
+    <br/><br/>
+        <a th:href="@{/home/{filmId}/edit(filmId=${film.id})}">Edit</a> |
+<!--        <a th:href="@{/contacts/{contactId}/delete(contactId=${contact.id})}">Delete</a>-->
+    >
+
+</div>
+<div th:if="${errorMessage}" th:utext="${errorMessage}" class="error" />
+</body>
+</html>

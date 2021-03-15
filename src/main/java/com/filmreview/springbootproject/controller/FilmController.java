@@ -1,14 +1,14 @@
 package com.filmreview.springbootproject.controller;
 
+import com.filmreview.springbootproject.exception.BadResourceException;
+import com.filmreview.springbootproject.exception.ResourceAlreadyExistsException;
+import com.filmreview.springbootproject.exception.ResourceNotFoundException;
 import com.filmreview.springbootproject.model.Film;
 import com.filmreview.springbootproject.service.FilmService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -37,21 +37,75 @@ public class FilmController {
         return "home";
     }
 
-    @GetMapping("/home/add-new-film")
+    @GetMapping("/home/add-film")
     public String showAddFilm(Model model) {
         Film film = new Film();
+        model.addAttribute("add",true);
         model.addAttribute("film",film);
-        return "add_new_film";
+        return "film_edit";
     }
 
-    @PostMapping("/home/add-new-film")
+    @PostMapping("/home/add-film")
     public String addFilm(Model model,
                           @ModelAttribute("film") @Valid Film film,
                           BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
-            return "add_new_film";
+            return "film_edit";
         }
-        filmService.save(film);
-        return "redirect:/home";
+        try {
+            filmService.save(film);
+            return "redirect:/home";
+        } catch (ResourceAlreadyExistsException | BadResourceException e) {
+            String errorMessage = e.getMessage();
+            model.addAttribute("errorMessage",errorMessage);
+            model.addAttribute("add",true);
+            return "film_edit";
+        }
+    }
+
+    @GetMapping("/home/{filmId}/edit")
+    public String showEditFilm(Model model,
+                               @PathVariable long filmId) {
+        Film film = null;
+
+        try{
+            film = filmService.findById(filmId);
+        } catch (ResourceNotFoundException e) {
+            model.addAttribute("errorMessage","Film not found");
+        }
+        model.addAttribute("add",false);
+        model.addAttribute("film",film);
+        return "film_edit";
+    }
+
+    @PostMapping("/home/{filmId}/edit")
+    public String editFilm(Model model,
+                           @PathVariable long filmId,
+                           @ModelAttribute("film") Film film) {
+        try{
+            film.setId(filmId);
+            filmService.update(film);
+            return "redirect:/films/" + String.valueOf(film.getId());
+
+        } catch (BadResourceException | ResourceNotFoundException e) {
+            String errorMessage = e.getMessage();
+            model.addAttribute("errorMessage",errorMessage);
+            model.addAttribute("add",false);
+
+            return "film_edit";
+        }
+    }
+
+    @GetMapping("/home/films/{filmId}")
+    public String getFilmById(Model model,
+                              @PathVariable long filmId) {
+        Film film = null;
+        try{
+            film = filmService.findById(filmId);
+        } catch (ResourceNotFoundException e) {
+            model.addAttribute("errorMessage", "Film not found");
+        }
+        model.addAttribute("film",film);
+        return "film";
     }
 }
