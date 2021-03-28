@@ -40,9 +40,8 @@ public class FilmController {
     @GetMapping("/home/add-film")
     public String showAddFilm(Model model) {
         Film film = new Film();
-        model.addAttribute("add",true);
         model.addAttribute("film",film);
-        return "film_edit";
+        return "add_film";
     }
 
     @PostMapping("/home/add-film")
@@ -50,7 +49,7 @@ public class FilmController {
                           @ModelAttribute("film") @Valid Film film,
                           BindingResult bindingResult) {
         if(bindingResult.hasErrors()) {
-            return "film_edit";
+            return "add_film";
         }
         try {
             filmService.save(film);
@@ -58,8 +57,7 @@ public class FilmController {
         } catch (ResourceAlreadyExistsException | BadResourceException e) {
             String errorMessage = e.getMessage();
             model.addAttribute("errorMessage",errorMessage);
-            model.addAttribute("add",true);
-            return "film_edit";
+            return "add_film";
         }
     }
 
