@@ -6,12 +6,18 @@
     <meta charset="UTF-8" />
     <title>INDEX</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <style>
+    .center {
+    text-align: center;
+    }
+    </style>
 </head>
+
 <body>
-<h1 th:utext="${title}" />
-<a th:href="@{/home}">Films List</a>
+<div class="center">
+    <h1><a th:href="@{/home}">Films List</a></h1>
+</div>
 <br/><br/>
-<div>Copyright © filmReview.com</div>
 </body>
 
 </html>
