@@ -61,9 +61,10 @@ public class FilmController {
         }
     }
 
-    @GetMapping("/home/{filmId}/edit")
-    public String showEditFilm(Model model,
+    @GetMapping("/home/edit/{filmId}")
+    public String showUpdateForm(Model model,
                                @PathVariable long filmId) {
+
         Film film = null;
 
         try{
@@ -71,24 +72,22 @@ public class FilmController {
         } catch (ResourceNotFoundException e) {
             model.addAttribute("errorMessage","Film not found");
         }
-        model.addAttribute("add",false);
         model.addAttribute("film",film);
         return "film_edit";
     }
 
-    @PostMapping("/home/{filmId}/edit")
-    public String editFilm(Model model,
+    @PostMapping("/home/update/{filmId}")
+    public String updateFilm(Model model,
                            @PathVariable long filmId,
-                           @ModelAttribute("film") Film film) {
+                           @ModelAttribute("film") @Valid Film film) {
         try{
             film.setId(filmId);
             filmService.update(film);
-            return "redirect:/films/" + String.valueOf(film.getId());
+            return "redirect:/home/films/" + String.valueOf(film.getId());
 
         } catch (BadResourceException | ResourceNotFoundException e) {
             String errorMessage = e.getMessage();
             model.addAttribute("errorMessage",errorMessage);
-            model.addAttribute("add",false);
 
             return "film_edit";
         }
@@ -106,4 +105,6 @@ public class FilmController {
         model.addAttribute("film",film);
         return "film";
     }
+
+
 }
