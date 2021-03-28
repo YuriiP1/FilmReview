@@ -2,24 +2,31 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${add} ? 'Create Film' : 'Edit Film'"/>
+    <title>Create Film</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body>
-<h1 th:text="${add} ? 'Create Film' : 'Edit Film'"/>
+<h1>Create Film</h1>
 <a th:href="@{/home}">Back to Home page</a>
-<form th:action="${add} ? @{/home/add-film} : @{/home/{filmId}/edit(filmId={film.id})}"
+<form th:action="@{/home/add-film}"
       th:object="${film}" method="POST">
 
     <table>
-        <tr th:if="${film.id}">
-            <td>ID</td>
-            <td>:</td>
-            <td th:utext="${film.id}">...</td>
-        </tr>
+
         <tr>
             <td>Title:</td>
             <td><input type="text" th:field="*{title}" /></td>
-            <td th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Title Error</td>
+            <td th:if="${#fields.hasErrors('title')}" th:errors="*{title}" >Title Error</td>
+        </tr>
+        <select name="genre" th:field="*{genre}">
+            <option th:each="genre : ${T(com.filmreview.springbootproject.model.Genre).values()}"
+                    th:value="${{genre}}"
+                    th:text="${genre}"></option>
+        </select>
+        <tr>
+            <td>Image Url:</td>
+            <td><input type="text" th:field="*{url_image}" /></td>
+            <td th:if="${#fields.hasErrors('url_image')}" th:errors="*{url_image}" >Image url Error</td>
         </tr>
         <tr>
             <td>Description:</td>
@@ -30,7 +37,7 @@
 <!--            <td><button type="submit">Submit</button></td>-->
         </tr>
     </table>
-    <input type="submit" th:value="${add} ? 'Create' : 'Update'"/>
+    <input type="submit" th:value="Create"/>
 </form>
 <div th:if="${errorMessage}" th:utext="${errorMessage}" class="error"/>
 </body>
