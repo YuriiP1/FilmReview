@@ -106,5 +106,16 @@ public class FilmController {
         return "film";
     }
 
-
+    @GetMapping("/home/delete/{filmId}")
+    public String deleteOne(@PathVariable Long filmId,
+                            Model model) {
+        try{
+            filmService.deleteById(filmId);
+            return "redirect:/home";
+        } catch (ResourceNotFoundException e) {
+            String errorMsg = e.getMessage();
+            model.addAttribute("errorMessage", errorMsg);
+            return "/home";
+        }
+    }
 }

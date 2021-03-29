@@ -36,13 +36,15 @@
         </tr>
 
     </table>
-<div class="modal-dialog modal-dialog-scrollable">
-    ...
-</div>
+
     <br/><br/>
+    <div th:if="not ${allowDelete}">
         <a th:href="@{/home/edit/{filmId}(filmId=${film.id})}">Edit</a> |
-<!--        <a th:href="@{/contacts/{contactId}/delete(contactId=${contact.id})}">Delete</a>-->
-    >
+        <a th:href="@{/home/delete/{filmId}(filmId=${film.id})}">Delete</a>
+    </div>
+    <form th:if="${allowDelete}" th:action="@{/home/delete/{filmId}(filmId=${film.id})}" method="POST">
+        Delete this film? <input type="submit" th:value="Yes" />
+    </form>
 
 </div>
 <div th:if="${errorMessage}" th:utext="${errorMessage}" class="error" />

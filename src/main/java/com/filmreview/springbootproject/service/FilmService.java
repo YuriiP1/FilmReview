@@ -62,7 +62,7 @@ public class FilmService {
             filmRepository.save(film);
         } else {
             BadResourceException e = new BadResourceException("Failed to save film.");
-            e.addErrorMessage("Contact is null or empty");
+            e.addErrorMessage("Film is null or empty");
             throw e;
 
         }
