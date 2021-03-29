@@ -79,7 +79,11 @@ public class FilmController {
     @PostMapping("/home/update/{filmId}")
     public String updateFilm(Model model,
                            @PathVariable long filmId,
-                           @ModelAttribute("film") @Valid Film film) {
+                           @ModelAttribute("film") @Valid Film film,
+                             BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return "film_edit";
+        }
         try{
             film.setId(filmId);
             filmService.update(film);
