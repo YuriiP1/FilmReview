@@ -9,9 +9,11 @@
           crossorigin="anonymous">
 </head>
 <body>
+<div th:insert="fragments/header.html :: header"></div>
+
 <h1>View Film</h1>
-<a th:href="@{/home}">Back to Home Page</a>
 <br/><br/>
+<div class="container">
     <table border="0">
         <img th:src="${film.url_image}"/>
         <tr>
@@ -39,13 +41,15 @@
 
     <br/><br/>
     <div th:if="not ${allowDelete}">
-        <a th:href="@{/home/edit/{filmId}(filmId=${film.id})}">Edit</a> |
-        <a th:href="@{/home/delete/{filmId}(filmId=${film.id})}">Delete</a>
+        <a class="btn btn-info" th:href="@{/home/edit/{filmId}(filmId=${film.id})}" role="button">Edit</a>
+        |
+        <a class="btn btn-danger" th:href="@{/home/delete/{filmId}(filmId=${film.id})}" role="button">Delete</a>
+
+
     </div>
     <form th:if="${allowDelete}" th:action="@{/home/delete/{filmId}(filmId=${film.id})}" method="POST">
         Delete this film? <input type="submit" th:value="Yes" />
     </form>
-
 </div>
 <div th:if="${errorMessage}" th:utext="${errorMessage}" class="error" />
 </body>

@@ -21,11 +21,16 @@
             <td><input type="text" th:field="*{title}" /></td>
             <td th:if="${#fields.hasErrors('title')}" th:errors="*{title}" >Title Error</td>
         </tr>
-        <select name="genre" th:field="*{genre}">
-            <option th:each="genre : ${T(com.filmreview.springbootproject.model.Genre).values()}"
-                    th:value="${{genre}}"
-                    th:text="${genre}"></option>
-        </select>
+        <tr>
+            <td>Genre:</td>
+            <td>
+                <select name="genre" th:field="*{genre}">
+                <option th:each="genre : ${T(com.filmreview.springbootproject.model.Genre).values()}"
+                        th:value="${{genre}}"
+                        th:text="${genre}"></option>
+                </select>
+            </td>
+        </tr>
         <tr>
             <td>Image Url:</td>
             <td><input type="text" th:field="*{url_image}" /></td>

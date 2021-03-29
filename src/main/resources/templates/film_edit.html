@@ -9,13 +9,11 @@
 
 </head>
 <body>
-<div class="">
     <h1 class="mb-5">Update Film</h1>
-    <a th:href="@{/home}">Back to Home Page</a>
-</div>
 
 
 <div class="container my-5">
+    <a th:href="@{/home}">Back to Home Page</a>
     <div class="row">
         <div class="col-md-6">
             <form action="#" th:action="@{/home/update/{id}(id=${film.id})}" th:object="${film}" method="post">
