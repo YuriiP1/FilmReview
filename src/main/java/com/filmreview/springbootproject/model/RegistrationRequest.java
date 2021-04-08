@@ -1,11 +1,10 @@
-package com.filmreview.springbootproject.service;
+package com.filmreview.springbootproject.model;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString

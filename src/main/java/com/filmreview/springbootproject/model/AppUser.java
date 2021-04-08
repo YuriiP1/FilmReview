@@ -22,20 +22,23 @@ import java.util.Collections;
 public class AppUser implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String firstName;
     private String lastName;
     private String email;
-//    @NotBlank(message = "Password may not be blank.")
     private String password;
+
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
     private Boolean locked = false;
     private Boolean enabled = false;
 
-    public AppUser(String firstName, String lastName, String email, String password, AppUserRole appUserRole) {
+    public AppUser(String firstName,
+                   String lastName,
+                   String email,
+                   String password,
+                   AppUserRole appUserRole) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
