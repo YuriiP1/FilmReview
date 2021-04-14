@@ -4,6 +4,9 @@ import com.filmreview.springbootproject.model.ConfirmationToken;
 import com.filmreview.springbootproject.repository.ConfirmationTokenRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 @Service
 public class ConfirmationTokenService {
 
@@ -15,5 +18,13 @@ public class ConfirmationTokenService {
 
     public void saveConfirmationToken(ConfirmationToken token) {
         confirmationTokenRepository.save(token);
+    }
+
+    public Optional<ConfirmationToken> getToken(String token) {
+        return confirmationTokenRepository.findByToken(token);
+    }
+
+    public int setConfirmedAt(String token) {
+        return confirmationTokenRepository.updateConfirmAt(token, LocalDateTime.now());
     }
 }
