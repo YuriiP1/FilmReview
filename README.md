@@ -34,7 +34,7 @@ cd FilmReview
 ```
 Run the project with:
 ```bash
-./mvnw spring-boot:run
+mvn spring-boot:run
 ```
 
 ## Contributing
