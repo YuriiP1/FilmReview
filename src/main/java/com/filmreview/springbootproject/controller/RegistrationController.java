@@ -5,7 +5,10 @@ import com.filmreview.springbootproject.service.RegistrationService;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/registration")
@@ -25,7 +28,11 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String registration(@ModelAttribute("request") RegistrationRequest request) {
+    public String registration(@ModelAttribute("request") @Valid RegistrationRequest request,
+                               BindingResult result) {
+        if(result.hasErrors()) {
+            return "/registration";
+        }
         registrationService.register(request);
         return "login";
     }

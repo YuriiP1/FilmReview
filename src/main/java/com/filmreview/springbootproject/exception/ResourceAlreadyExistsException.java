@@ -1,11 +1,12 @@
 package com.filmreview.springbootproject.exception;
 
-public class ResourceAlreadyExistsException extends Exception {
+public class ResourceAlreadyExistsException extends RuntimeException {
 
-    public ResourceAlreadyExistsException() {
-
+    public ResourceAlreadyExistsException(String message) {
+        super(message);
     }
-    public ResourceAlreadyExistsException(String s) {
-        super(s);
+
+    public ResourceAlreadyExistsException(String message, Throwable cause){
+        super(message, cause);
     }
 }
