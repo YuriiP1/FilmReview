@@ -1,6 +1,5 @@
 package com.filmreview.springbootproject.controller;
 
-import com.filmreview.springbootproject.exception.BadResourceException;
 import com.filmreview.springbootproject.exception.ResourceAlreadyExistsException;
 import com.filmreview.springbootproject.exception.ResourceNotFoundException;
 import com.filmreview.springbootproject.model.Film;
@@ -48,13 +47,13 @@ public class FilmController {
     public String addFilm(Model model,
                           @ModelAttribute("film") @Valid Film film,
                           BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             return "add_film";
         }
         try {
             filmService.save(film);
             return "redirect:/home";
-        } catch (ResourceAlreadyExistsException | BadResourceException e) {
+        } catch (ResourceAlreadyExistsException e) {
             String errorMessage = e.getMessage();
             model.addAttribute("errorMessage",errorMessage);
             return "add_film";
@@ -66,7 +65,6 @@ public class FilmController {
                                @PathVariable long filmId) {
 
         Film film = null;
-
         try{
             film = filmService.findById(filmId);
         } catch (ResourceNotFoundException e) {
@@ -87,9 +85,9 @@ public class FilmController {
         try{
             film.setId(filmId);
             filmService.update(film);
-            return "redirect:/home/films/" + String.valueOf(film.getId());
+            return "redirect:/home/films/" + film.getId();
 
-        } catch (BadResourceException | ResourceNotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             String errorMessage = e.getMessage();
             model.addAttribute("errorMessage",errorMessage);
 
@@ -100,26 +98,18 @@ public class FilmController {
     @GetMapping("/home/films/{filmId}")
     public String getFilmById(Model model,
                               @PathVariable long filmId) {
-        Film film = null;
-        try{
-            film = filmService.findById(filmId);
-        } catch (ResourceNotFoundException e) {
-            model.addAttribute("errorMessage", "Film not found");
-        }
-        model.addAttribute("film",film);
+
+        model.addAttribute("film",filmService.findById(filmId));
+
         return "film";
     }
 
     @GetMapping("/home/delete/{filmId}")
     public String deleteOne(@PathVariable Long filmId,
                             Model model) {
-        try{
-            filmService.deleteById(filmId);
-            return "redirect:/home";
-        } catch (ResourceNotFoundException e) {
-            String errorMsg = e.getMessage();
-            model.addAttribute("errorMessage", errorMsg);
-            return "/home";
-        }
+
+        filmService.deleteById(filmId);
+
+        return "redirect:/home";
     }
 }
