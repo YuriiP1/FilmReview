@@ -35,5 +35,8 @@
         <span style="background-color:pink;" th:if="${hasNext}"><a th:href="@{/home?page={next}(next=${next})}">Next</a></span>
     </nobr>
 </div>
+<div th:if="${errorMessage}" th:utext="${errorMessage}" class="error" >
+
+</div>
 </body>
 </html>
