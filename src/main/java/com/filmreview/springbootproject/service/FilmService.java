@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class FilmService {
@@ -44,10 +45,16 @@ public class FilmService {
     }
 
     public void update(Film film) {
-        if (!existsById(film.getId())) {
-            throw new ResourceNotFoundException("Cannot find Film with id: " + film.getId());
-        }
+        this.validationUpdate(film);
         filmRepository.save(film);
+    }
+
+    private void validationUpdate(Film film) {
+        if (Objects.nonNull(film)) {
+            if (!existsById(film.getId())) {
+                throw new ResourceNotFoundException("Cannot find Film with id: " + film.getId());
+            }
+        }
     }
 
     public void deleteById(Long id) {
